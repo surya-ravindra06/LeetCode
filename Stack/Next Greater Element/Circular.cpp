@@ -10,47 +10,20 @@ int main()
 	for (int i = 0; i < n; ++i)
 		cin >> nums[i];
 
-	vector<int> ans(n, -1);
-	stack<int> s;
+	vector<int> nge(n, -1);
+	stack<int> st;
 
-	for (int i = nums.size()-1; i >= 0; --i)
+	for (int i = 2*(nums.size())-1; i >= 0; --i)
 	{
-		if(i != nums.size()-1 && nums[i+1] > nums[i])
-		{
-			s.push(nums[i+1]);
-			ans[i] = nums[i+1];
-		}
+		while (!st.empty() && st.top() <= nums[i%n]) 
+          st.pop();
 
-		else
-		{
-			while(!s.empty() && s.top() <= nums[i])
-            	s.pop();
-
-            if(s.empty())
-            {
-            	int a = 0;
-                for (int j = 0; j < i; ++j)
-				{
-					if(nums[j] > nums[i])
-					{
-						s.push(nums[j]);
-						ans[i] = nums[j];
-						a = 1;
-						break;
-					}
-				}
-
-				if(!a)
-					ans[i] = -1;
-            }
-
-            else
-                ans[i] = s.top();
-		}
-	
+      	if(!st.empty() && i < n)
+      		nge[i] = st.top();
+        
+        st.push(nums[i%n]);
 	}
-	
-	for(auto it : ans)
-		cout << it << " ";
-	
+
+	for(auto v : nge)
+		cout << v << " ";
 }
