@@ -1,37 +1,29 @@
-#include <bits/stdc++.h>
+#include "temp.h"
 using namespace std;
 
 int main()
 {
-    int n;
-    cin >> n;
-    vector<int> v(n);
-    for(int i = 0; i < n; i++)
-        cin >> v[i];
+	int n;
+	cin >> n;
 
-    vector<int> ngt(n, -1);
-    stack<int> s;
-    for (int i = v.size() - 2; i >= 0; i--)
-    {
-        if(v[i] < v[i+1])
-        {
-            s.push(v[i+1]);
-            ngt[i] = v[i+1];
-        }   
+	vector<int> nums(n);
+	for (int i = 0; i < n; ++i)
+		cin >> nums[i];
 
-        else
-        {
-            while(!s.empty() && s.top() <= v[i])
-                s.pop();
+	vector<int> nge(n, -1);
+	stack<int> st;
 
-            if(s.empty())
-                ngt[i] = -1;
-            else
-                ngt[i] = s.top(); 
-        }
+	for (int i = (nums.size())-1; i >= 0; --i)
+	{
+		while (!st.empty() && st.top() <= nums[i]) 
+          st.pop();
+
+      	if(!st.empty())
+      		nge[i] = st.top();
         
-    }
-    
-    for(auto i : ngt)
-        cout << i << " ";
+        st.push(nums[i]);
+	}
+
+	for(auto v : nge)
+		cout << v << " ";
 }
